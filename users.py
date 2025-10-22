@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
-from orders import Order
+from product import Product
+from purchases import Purchase
 
 
 class User(ABC):
@@ -31,7 +32,24 @@ class Customer(User):
     def __init__(self, name, email, password, deposit) -> None:
         super().__init__(name, email, password)
         self.__deposit = deposit
-        self.cart = Order()
+        self.cart = Purchase()
+
+    def view_all_products(self, store):
+        store.list.view_products()
+
+    def add_to_cart(self, store, product_name, quantity):
+        product = store.list.find_product(product_name)
+
+        if product:
+            if product.quantity >= quantity:
+                self.cart.add_cart(
+                    Product(product.product_name, product.price, quantity)
+                )
+                print("Item added.")
+            else:
+                print("Product quantity is not available.")
+        else:
+            print("Product not found.")
 
     @property
     def deposit(self):
