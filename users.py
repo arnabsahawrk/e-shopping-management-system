@@ -43,7 +43,7 @@ class Customer(User):
         if product:
             if product.quantity >= quantity:
                 self.cart.add_cart(
-                    Product(product.product_name, product.price, quantity)
+                    Product(product.name, product.price, quantity)
                 )
                 print("Item added.")
             else:
