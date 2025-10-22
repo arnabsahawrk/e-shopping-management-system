@@ -51,6 +51,29 @@ class Customer(User):
         else:
             print("Product not found.")
 
+    def view_cart(self):
+        if len(self.cart.products):
+            print("\t**********************")
+            print("\tALL ADDED PRODUCTS")
+            print("\t**********************")
+            for product, quantity in self.cart.products.items():
+                print(
+                    f"Name: {product.name}\tPrice: {product.price}\t",
+                    f"Quantity: {quantity}",
+                )
+
+            print(f"Total Price: {self.cart.total}")
+        else:
+            print("Not added any product yet.")
+
+    def pay_bill(self):
+        if self.deposit >= self.cart.total:
+            self.deposit = self.cart.total
+            print(f"Total {self.cart.total} taka paid successfully.")
+            self.cart.clear()
+        else:
+            print("You don't have enough money to pay.")
+
     @property
     def deposit(self):
         return self.__deposit
